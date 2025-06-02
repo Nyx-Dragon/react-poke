@@ -194,6 +194,12 @@ h1 {
     border-radius: 8px;
 }
 
+.no-image-warning {
+    color: #c0392b;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
 /* Colores por tipo, puedes añadir más */
 .type-electric {
     background-color: #f8d030;

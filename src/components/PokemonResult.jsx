@@ -6,21 +6,21 @@ const PokemonResult = ({ pokemon }) => {
     (sprite) => typeof sprite === "string" && sprite
   );
 
-  const hasAnyImage = pokemon.sprites.front_default || sprites.length > 0;
+  const capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 
   return (
     <div className="pokemon-result">
-      <p className="pokemon-name">{pokemon.name}</p>
+      <p className="pokemon-name">{capitalizedName}</p>
 
       {pokemon.sprites.front_default ? (
         <img
           className="pokemon-image"
           src={pokemon.sprites.front_default}
-          alt={pokemon.name}
+          alt={`Imagen de ${capitalizedName}`}
           loading="lazy"
         />
       ) : (
-        <p className="no-image-warning">Imagen principal no disponible</p>
+        <p className="no-image-warning">⚠️ Imagen principal no disponible</p>
       )}
 
       <div className="pokemon-types">
@@ -49,14 +49,25 @@ const PokemonResult = ({ pokemon }) => {
             <img
               key={i}
               src={spriteUrl}
-              alt={`${pokemon.name} sprite ${i}`}
+              alt={`${capitalizedName} sprite ${i + 1}`}
               loading="lazy"
             />
           ))
         ) : (
-          <p className="no-image-warning">No hay imágenes adicionales disponibles</p>
+          <p className="no-image-warning">⚠️ No hay imágenes adicionales disponibles</p>
         )}
       </div>
+
+      {pokemon.forms?.length > 1 && (
+        <div className="pokemon-forms">
+          <p>Formas:</p>
+          <ul>
+            {pokemon.forms.map(({ name }) => (
+              <li key={name}>{name.replace(/-/g, " ")}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {pokemon.evolutionUrl && (
         <p>
@@ -65,12 +76,12 @@ const PokemonResult = ({ pokemon }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Ver cadena evolutiva
+            🔗 Ver cadena evolutiva
           </a>
         </p>
       )}
 
-      {/* ✅ Aquí el gráfico de stats */}
+      {/* Gráfico de estadísticas */}
       <PokemonStatsChart pokemon={pokemon} />
     </div>
   );
